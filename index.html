@@ -4,6 +4,7 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>AS.GEST • Relatório de Faturamento</title>
+
   <style>
     :root{
       --bg:#0b1220;
@@ -42,22 +43,8 @@
     .brand{
       display:flex; align-items:center; gap:12px;
     }
-    .logoImg{
-  width:54px; height:54px;
-  border-radius:18px;
-  background: rgba(18,27,46,.6);
-  border:1px solid var(--line);
-  display:grid; place-items:center;
-  overflow:hidden;
-  box-shadow: 0 12px 35px rgba(0,0,0,.25);
-}
-.logoImg img{
-  width:100%;
-  height:100%;
-  object-fit:contain; /* mantém a logo inteira */
-  padding:6px;       /* ajuste se quiser mais/menos “respiro” */
-}
 
+    /* Fallback logo (se não usar imagem) */
     .logo{
       width:44px; height:44px; border-radius:14px;
       background: linear-gradient(135deg, rgba(56,189,248,.95), rgba(34,197,94,.85));
@@ -67,8 +54,28 @@
       letter-spacing:.2px;
       user-select:none;
     }
+
+    /* Logo por imagem (AS.GEST) */
+    .logoImg{
+      width:44px; height:44px;
+      border-radius:14px;
+      background: rgba(18,27,46,.6);
+      border:1px solid var(--line);
+      display:grid; place-items:center;
+      overflow:hidden;
+      box-shadow: 0 12px 35px rgba(0,0,0,.25);
+    }
+    .logoImg img{
+      width:100%;
+      height:100%;
+      object-fit:contain;
+      padding:6px;
+      display:block;
+    }
+
     .brand h1{
       font-size:16px; margin:0; font-weight:900;
+      letter-spacing:0;
     }
     .brand p{
       margin:2px 0 0; font-size:12px; color:var(--muted);
@@ -122,6 +129,7 @@
       font-size:14px;
       color:var(--muted);
       font-weight:800;
+      letter-spacing:0;
     }
     .kpis{
       display:grid;
@@ -136,20 +144,34 @@
       border:1px solid var(--line);
       border-radius:16px;
       padding:12px;
-      min-height:86px;
+      min-height:92px;
       position:relative;
       overflow:hidden;
     }
     .kpi b{
       display:block; font-size:12px; color:var(--muted); font-weight:800;
       margin-bottom:6px;
+      letter-spacing:0;
     }
     .kpi .v{
-      font-size:18px; font-weight:900; color:var(--accent);
-      letter-spacing:.2px;
+      font-size:20px;
+      font-weight:900;
+      color:var(--accent);
+      letter-spacing:0;
+      line-height:1.15;
+      font-variant-numeric: tabular-nums;
+
+      /* deixa caber sem "..." */
+      white-space: normal;
+      overflow: visible;
+      text-overflow: clip;
+
+      /* quebra “bem” valores grandes */
+      word-break: break-word;
     }
     .kpi .s{
-      margin-top:4px; font-size:12px; color:var(--muted);
+      margin-top:6px; font-size:12px; color:var(--muted);
+      letter-spacing:0;
     }
     .kpi::after{
       content:"";
@@ -169,6 +191,7 @@
     }
     .field label{
       display:block; font-size:11px; color:var(--muted); font-weight:800; margin-bottom:6px;
+      letter-spacing:0;
     }
     select, input{
       width:100%;
@@ -178,6 +201,7 @@
       background: rgba(15,26,51,.7);
       color: var(--text);
       outline:none;
+      letter-spacing:0;
     }
 
     .split{
@@ -192,6 +216,7 @@
       color:var(--muted);
       font-size:13px;
       line-height:1.55;
+      letter-spacing:0;
     }
     .note b{color:var(--text)}
     .note .tag{
@@ -203,6 +228,7 @@
       font-size:12px;
       color:var(--muted);
       background: rgba(15,26,51,.55);
+      letter-spacing:0;
     }
 
     /* Table */
@@ -217,15 +243,24 @@
     th, td{
       padding:10px 10px;
       border-bottom:1px solid rgba(35,48,77,.7);
-      font-size:13px;
+      font-size:14px;
       text-align:left;
+      letter-spacing:0;
     }
     th{color:var(--muted); font-weight:900; font-size:12px}
     tr:last-child td{border-bottom:0}
     td.num{text-align:right; font-variant-numeric: tabular-nums;}
     .rowmuted{color:var(--muted)}
-    .small{font-size:12px;color:var(--muted)}
+    .small{font-size:12px;color:var(--muted); letter-spacing:0}
     .right{display:flex; justify-content:flex-end; gap:10px; flex-wrap:wrap}
+
+    /* Table first column truncation */
+    td:first-child{
+      max-width: 260px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
 
     /* Login */
     .login{
@@ -247,9 +282,11 @@
       display:flex; gap:14px; align-items:flex-start;
       margin-bottom:12px;
     }
+    /* login logo size */
     .hero .logo{width:54px;height:54px;border-radius:18px;font-size:16px}
-    .hero h1{margin:0; font-size:20px; font-weight:950}
-    .hero p{margin:6px 0 0; color:var(--muted); font-size:13px; line-height:1.45}
+    .hero .logoImg{width:54px;height:54px;border-radius:18px}
+    .hero h1{margin:0; font-size:20px; font-weight:950; letter-spacing:0}
+    .hero p{margin:6px 0 0; color:var(--muted); font-size:13px; line-height:1.45; letter-spacing:0}
     .client{
       margin-top:10px;
       padding:12px;
@@ -257,8 +294,8 @@
       border:1px solid var(--line);
       background: rgba(15,26,51,.55);
     }
-    .client b{display:block; font-size:13px}
-    .client span{display:block; margin-top:4px; color:var(--muted); font-size:12px}
+    .client b{display:block; font-size:13px; letter-spacing:0}
+    .client span{display:block; margin-top:4px; color:var(--muted); font-size:12px; letter-spacing:0}
     .loginActions{display:flex; gap:10px; margin-top:12px; flex-wrap:wrap}
     .divider{height:1px;background:rgba(35,48,77,.7); margin:14px 0}
     .warnBox{
@@ -269,6 +306,7 @@
       border-radius:16px;
       font-size:13px;
       display:none;
+      letter-spacing:0;
     }
 
     /* Modal */
@@ -293,11 +331,11 @@
       from{transform: translateY(10px); opacity:.75}
       to{transform: translateY(0); opacity:1}
     }
-    .modal h3{margin:0 0 6px; font-size:16px}
-    .modal p{margin:0 0 12px; color:var(--muted); font-size:13px; line-height:1.45}
+    .modal h3{margin:0 0 6px; font-size:16px; letter-spacing:0}
+    .modal p{margin:0 0 12px; color:var(--muted); font-size:13px; line-height:1.45; letter-spacing:0}
     .modal .row{display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end}
     .modal .row .btn{min-width:120px}
-    .checkline{display:flex; align-items:center; gap:8px; margin-top:10px; color:var(--muted); font-size:12px}
+    .checkline{display:flex; align-items:center; gap:8px; margin-top:10px; color:var(--muted); font-size:12px; letter-spacing:0}
     .checkline input{width:auto}
 
     /* Charts */
@@ -306,12 +344,94 @@
       background: rgba(15,26,51,.55);
       border-radius: 18px;
       padding:12px;
+      min-height: 360px;
     }
-    canvas{width:100%; height:320px}
-    @media (max-width:980px){ canvas{height:280px} }
-
+    canvas{
+      width:100%;
+      height:auto;
+      display:block;
+    }
     .fadeIn{animation: fadeUp .35s ease}
     @keyframes fadeUp{from{opacity:0; transform:translateY(8px)} to{opacity:1; transform:translateY(0)}}
+
+    /* =========================
+       FOOTER (bonito + logo pequena)
+       ========================= */
+    .footer {
+      margin-top: 28px;
+      border-top: 1px solid var(--line);
+      background: rgba(11, 18, 32, 0.88);
+      padding: 12px 18px;
+    }
+
+    .footerWrap {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      gap: 14px;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+
+    .footerBrand {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      min-width: 220px;
+    }
+
+    .footerLogo {
+      width: 22px;           /* pequenininha */
+      height: 22px;
+      object-fit: contain;
+      border-radius: 6px;
+      background: rgba(18, 27, 46, 0.55);
+      border: 1px solid rgba(35, 48, 77, 0.65);
+      padding: 3px;
+      flex: 0 0 auto;
+    }
+
+    .footerTitle {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.15;
+    }
+
+    .footerTitle strong {
+      font-size: 13px;
+      font-weight: 950;
+      letter-spacing: 0.2px;
+    }
+
+    .footerTitle span {
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .footerInfo {
+      display: flex;
+      gap: 14px;
+      align-items: center;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .footerInfo b {
+      color: var(--text);
+    }
+
+    .footerInfo .sep {
+      opacity: 0.45;
+    }
+
+    @media (max-width: 700px) {
+      .footerInfo {
+        justify-content: flex-start;
+      }
+    }
   </style>
 </head>
 
@@ -320,7 +440,11 @@
   <section id="loginView" class="login">
     <div class="loginCard">
       <div class="hero">
-        <div class="logo">AS</div>
+        <!-- Logo (imagem). Se você não tiver a imagem na pasta, troque para <div class="logo">AS</div> -->
+        <div class="logoImg">
+          <img src="logo-asgest.png" alt="AS.GEST">
+        </div>
+
         <div>
           <h1>AS.GEST • Relatório de Faturamento</h1>
           <p>
@@ -354,7 +478,6 @@
         <button class="btn primary" id="btnOpenPass">Clique para acessar</button>
         <button class="btn ghost" id="btnAbout">Sobre a análise</button>
       </div>
-
     </div>
   </section>
 
@@ -363,7 +486,10 @@
     <div class="wrap">
       <div class="topbar">
         <div class="brand">
-          <div class="logo">AS</div>
+          <div class="logoImg">
+            <img src="logo-asgest.png" alt="AS.GEST">
+          </div>
+
           <div>
             <h1>AS.GEST • Faturamento 2025</h1>
             <p id="subline">Cliente: Mercado da Praia Ltda • CNPJ: 26.168.590/0001-50</p>
@@ -456,11 +582,11 @@
           <div class="split">
             <div class="chartBox">
               <div class="small" style="margin-bottom:10px">Top cartões por faturamento (período)</div>
-              <canvas id="barChart" width="800" height="320"></canvas>
+              <canvas id="barChart"></canvas>
             </div>
             <div class="chartBox">
               <div class="small" style="margin-bottom:10px">Participação (PIX x Cartões)</div>
-              <canvas id="donutChart" width="800" height="320"></canvas>
+              <canvas id="donutChart"></canvas>
             </div>
           </div>
         </div>
@@ -476,7 +602,7 @@
               <thead>
                 <tr>
                   <th>Cartão</th>
-                  <th class="num">Qtd</th>
+                  <th class="num">Qtd Cupom</th>
                   <th class="num">Valor</th>
                   <th class="num">%</th>
                 </tr>
@@ -534,610 +660,646 @@
     </div>
   </div>
 
-<script>
-/* =========================
-   CONFIGURAÇÕES RÁPIDAS
-   ========================= */
-const CONFIG = {
-  // Troque aqui pela senha que vocês vão compartilhar:
-  PASSWORD: "1234",
-  // Troque aqui por seus dados (assinatura):
-  DEV_NAME: "Alan de Souza",
-  CLIENTE: "Mercado da Praia Ltda",
-  CNPJ: "26.168.590/0001-50",
-  ANO_BASE: 2025
-};
+  <script>
+  /* =========================
+     CONFIGURAÇÕES RÁPIDAS
+     ========================= */
+  const CONFIG = {
+    PASSWORD: "DaPraia",
+    DEV_NAME: "Alan de Souza",
+    CLIENTE: "Mercado da Praia Ltda",
+    CNPJ: "26.168.590/0001-50",
+    ANO_BASE: 2025
+  };
 
-/* =========================
-   DADOS (BASE LIMPA 2025)
-   Mes/Ano | Cartão | Qtd | Valor (R$)
-   Observação: jul/25 já corrigido (sem duplicidades e CABAL padronizado)
-   ========================= */
-const DATA = [
-  // jan/25
-  ["2025-01","BANRICARD",22,"2.353,35"],
-  ["2025-01","BANRISUL",235,"23.064,09"],
-  ["2025-01","VERDECARD",6,"728,73"],
-  ["2025-01","AMEX",10,"1.077,02"],
-  ["2025-01","CABAL VOUCHER",3,"62,34"],
-  ["2025-01","ELO CREDIT",53,"5.373,29"],
-  ["2025-01","ELO DEBIT",161,"13.148,66"],
-  ["2025-01","HIPERCARD CREDIT",1,"30,58"],
-  ["2025-01","MASTERCARD CREDI",1310,"112.474,16"],
-  ["2025-01","MASTERCARD DEBIT",1609,"115.899,63"],
-  ["2025-01","VISA CREDITO",1081,"108.914,42"],
-  ["2025-01","VISA DEBITO",1385,"107.778,24"],
-
-  // fev/25
-  ["2025-02","BANRICARD",31,"2.458,76"],
-  ["2025-02","BANRISUL",429,"38.085,85"],
-  ["2025-02","VERDECARD",20,"832,77"],
-  ["2025-02","AMEX",4,"322,33"],
-  ["2025-02","CABAL DEBIT",1,"23,98"],
-  ["2025-02","CABAL VOUCHER",17,"924,65"],
-  ["2025-02","ELO CREDIT",85,"7.623,49"],
-  ["2025-02","ELO DEBIT",225,"17.169,02"],
-  ["2025-02","HIPERCARD CREDIT",4,"293,43"],
-  ["2025-02","MASTERCARD CREDI",1329,"116.281,21"],
-  ["2025-02","MASTERCARD DEBIT",1712,"126.941,10"],
-  ["2025-02","VISA CREDITO",974,"89.734,56"],
-  ["2025-02","VISA DEBITO",1504,"112.837,54"],
-
-  // mar/25
-  ["2025-03","BANRICARD",30,"3.400,67"],
-  ["2025-03","BANRISUL",372,"34.825,68"],
-  ["2025-03","VERDECARD",3,"404,64"],
-  ["2025-03","AMEX",11,"1.698,92"],
-  ["2025-03","CABAL DEBIT",2,"133,34"],
-  ["2025-03","CABAL VOUCHER",20,"515,29"],
-  ["2025-03","ELO CREDIT",66,"6.166,98"],
-  ["2025-03","ELO DEBIT",241,"19.620,96"],
-  ["2025-03","HIPERCARD CREDIT",3,"407,22"],
-  ["2025-03","MASTERCARD CREDI",1274,"107.028,92"],
-  ["2025-03","MASTERCARD DEBIT",1728,"122.143,42"],
-  ["2025-03","VISA CREDITO",865,"81.480,77"],
-  ["2025-03","VISA DEBITO",1445,"119.252,70"],
-
-  // abr/25
-  ["2025-04","BANRICARD",10,"673,24"],
-  ["2025-04","BANRISUL",280,"25.020,93"],
-  ["2025-04","VERDECARD",13,"513,55"],
-  ["2025-04","AMEX",8,"866,46"],
-  ["2025-04","CABAL DEBIT",3,"212,22"],
-  ["2025-04","CABAL VOUCHER",29,"898,44"],
-  ["2025-04","ELO CREDIT",62,"4.909,02"],
-  ["2025-04","ELO DEBIT",154,"11.359,81"],
-  ["2025-04","HIPERCARD CREDIT",2,"84,12"],
-  ["2025-04","MASTERCARD CREDI",948,"76.157,19"],
-  ["2025-04","MASTERCARD DEBIT",1316,"88.085,47"],
-  ["2025-04","VISA CREDITO",650,"63.916,49"],
-  ["2025-04","VISA DEBITO",1134,"75.550,96"],
-
-  // mai/25
-  ["2025-05","BANRICARD",21,"916,15"],
-  ["2025-05","BANRISUL",276,"25.230,06"],
-  ["2025-05","VERDECARD",9,"791,57"],
-  ["2025-05","AMEX",9,"1.228,50"],
-  ["2025-05","CABAL DEBIT",7,"420,35"],
-  ["2025-05","CABAL VOUCHER",24,"919,88"],
-  ["2025-05","ELO CREDIT",47,"3.977,24"],
-  ["2025-05","ELO DEBIT",125,"11.182,79"],
-  ["2025-05","HIPERCARD CREDIT",6,"301,57"],
-  ["2025-05","MASTERCARD CREDI",765,"64.637,82"],
-  ["2025-05","MASTERCARD DEBIT",1204,"81.625,67"],
-  ["2025-05","VISA CREDITO",516,"50.790,78"],
-  ["2025-05","VISA DEBITO",1023,"70.862,31"],
-
-  // jun/25
-  ["2025-06","BANRICARD",2,"97,24"],
-  ["2025-06","BANRISUL",252,"22.360,57"],
-  ["2025-06","VERDECARD",7,"795,43"],
-  ["2025-06","AMEX",5,"436,94"],
-  ["2025-06","CABAL DEBIT",7,"892,59"],
-  ["2025-06","CABAL VOUCHER",24,"953,64"],
-  ["2025-06","ELO CREDIT",38,"4.732,47"],
-  ["2025-06","ELO DEBIT",137,"11.961,49"],
-  ["2025-06","MASTERCARD CREDI",637,"49.182,73"],
-  ["2025-06","MASTERCARD DEBIT",1097,"73.160,51"],
-  ["2025-06","VISA CREDITO",356,"30.055,76"],
-  ["2025-06","VISA DEBITO",848,"60.248,03"],
-
-  // jul/25 (corrigido: ELO e CABAL somados/padronizados)
-  ["2025-07","BANRICARD",3,"176,58"],
-  ["2025-07","BANRISUL",251,"22.388,62"],
-  ["2025-07","VERDECARD",17,"1.039,70"],
-  ["2025-07","CABAL DEBIT",5,"195,09"],
-  ["2025-07","CABAL VOUCHER",22,"800,51"],
-  ["2025-07","ELO CREDIT",48,"3.399,08"],
-  ["2025-07","ELO DEBIT",119,"9.826,91"],
-  ["2025-07","MASTERCARD CREDI",716,"63.696,55"],
-  ["2025-07","MASTERCARD DEBIT",1045,"67.443,02"],
-  ["2025-07","VISA CREDITO",470,"41.634,87"],
-  ["2025-07","VISA DEBITO",885,"67.507,64"],
-  ["2025-07","MAESTRO",29,"1.393,49"],
-  ["2025-07","MASTERCARD",16,"1.444,75"],
-  ["2025-07","VISA",7,"250,85"],
-  ["2025-07","VISA ELECTRON",22,"1.165,52"],
-
-  // ago/25
-  ["2025-08","BANRICARD",8,"404,43"],
-  ["2025-08","BANRISUL",221,"22.299,35"],
-  ["2025-08","VERDECARD",22,"1.683,43"],
-  ["2025-08","AMEX",3,"520,09"],
-  ["2025-08","CABAL DEBIT",4,"772,55"],
-  ["2025-08","ELO CREDIT",44,"3.669,14"],
-  ["2025-08","ELO DEBIT",143,"11.564,25"],
-  ["2025-08","MAESTRO",1105,"71.896,91"],
-  ["2025-08","MASTERCARD",695,"55.388,05"],
-  ["2025-08","VISA",467,"40.650,36"],
-  ["2025-08","VISA ELECTRON",902,"71.183,78"],
-  ["2025-08","PIX",506,"26.351,40"],
-
-  // set/25
-  ["2025-09","BANRICARD",1,"101,57"],
-  ["2025-09","BANRISUL",254,"20.371,08"],
-  ["2025-09","VERDECARD",13,"1.597,63"],
-  ["2025-09","AMEX",5,"624,21"],
-  ["2025-09","CABAL DEBIT",5,"512,59"],
-  ["2025-09","ELO CREDIT",48,"3.923,28"],
-  ["2025-09","ELO DEBIT",129,"9.028,76"],
-  ["2025-09","MAESTRO",1108,"66.850,18"],
-  ["2025-09","MASTERCARD",734,"53.782,87"],
-  ["2025-09","VISA",441,"34.476,06"],
-  ["2025-09","VISA ELECTRON",899,"62.269,79"],
-  ["2025-09","PIX",905,"51.719,76"],
-
-  // out/25
-  ["2025-10","BANRICARD",9,"404,69"],
-  ["2025-10","BANRISUL",303,"26.552,36"],
-  ["2025-10","VERDECARD",21,"2.015,24"],
-  ["2025-10","AMEX",4,"510,85"],
-  ["2025-10","CABAL DEBIT",11,"719,08"],
-  ["2025-10","ELO CREDIT",48,"3.852,71"],
-  ["2025-10","ELO DEBIT",122,"11.106,30"],
-  ["2025-10","MAESTRO",1291,"76.698,12"],
-  ["2025-10","MASTERCARD",868,"64.660,32"],
-  ["2025-10","VISA",518,"43.679,01"],
-  ["2025-10","VISA ELECTRON",957,"68.172,49"],
-  ["2025-10","PIX",989,"59.985,46"],
-
-  // nov/25
-  ["2025-11","BANRICARD",15,"704,61"],
-  ["2025-11","BANRISUL",321,"28.765,05"],
-  ["2025-11","VERDECARD",18,"1.414,20"],
-  ["2025-11","AMEX",9,"760,23"],
-  ["2025-11","CABAL DEBIT",9,"623,00"],
-  ["2025-11","ELO CREDIT",71,"6.204,76"],
-  ["2025-11","ELO DEBIT",150,"12.045,96"],
-  ["2025-11","MAESTRO",1478,"95.520,54"],
-  ["2025-11","MASTERCARD",1148,"98.985,05"],
-  ["2025-11","VISA",703,"64.987,26"],
-  ["2025-11","VISA ELECTRON",1248,"93.219,82"],
-  ["2025-11","PIX",1085,"68.664,01"],
-
-  // dez/25
-  ["2025-12","BANRICARD",20,"2.667,25"],
-  ["2025-12","BANRISUL",561,"51.976,39"],
-  ["2025-12","VERDECARD",15,"1.937,91"],
-  ["2025-12","AMEX",18,"3.279,18"],
-  ["2025-12","CABAL DEBIT",4,"590,45"],
-  ["2025-12","ELO CREDIT",153,"12.368,13"],
-  ["2025-12","ELO DEBIT",381,"33.942,14"],
-  ["2025-12","MAESTRO",2748,"213.166,50"],
-  ["2025-12","MASTERCARD",2192,"241.319,05"],
-  ["2025-12","VISA",1568,"181.585,96"],
-  ["2025-12","VISA ELECTRON",2452,"216.998,72"],
-  ["2025-12","PIX",1943,"161.075,06"],
-].map(([ym, card, qtd, brl]) => ({
-  ym,
-  mesLabel: ymToPt(ym),
-  card,
-  qtd: Number(qtd),
-  valorCent: brlToCent(brl)
-}));
-
-/* =========================
-   UTIL
-   ========================= */
-function brlToCent(brl){
-  // "216.998,72" -> 21699872
-  const s = String(brl).trim().replace(/\./g,"").replace(",",".");
-  const v = Number(s);
-  return Math.round(v*100);
-}
-function centToBRL(cent){
-  const v = (cent/100);
-  return v.toLocaleString("pt-BR", {style:"currency", currency:"BRL"});
-}
-function fmtInt(n){
-  return n.toLocaleString("pt-BR");
-}
-function ymToPt(ym){
-  const [y,m] = ym.split("-").map(Number);
-  const nomes = ["jan","fev","mar","abr","mai","jun","jul","ago","set","out","nov","dez"];
-  return `${nomes[m-1]}/${String(y).slice(2)}`;
-}
-function ymToPretty(ym){
-  const [y,m] = ym.split("-").map(Number);
-  const nomes = ["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"];
-  return `${nomes[m-1]} / ${y}`;
-}
-
-/* =========================
-   AUTH (senha simples)
-   ========================= */
-const loginView = document.getElementById("loginView");
-const appView = document.getElementById("appView");
-const modalBack = document.getElementById("modalBack");
-const passInput = document.getElementById("passInput");
-const rememberChk = document.getElementById("rememberChk");
-const loginWarn = document.getElementById("loginWarn");
-
-document.getElementById("devName").textContent = CONFIG.DEV_NAME;
-document.getElementById("subline").textContent = `Cliente: ${CONFIG.CLIENTE} • CNPJ: ${CONFIG.CNPJ}`;
-
-document.getElementById("btnOpenPass").onclick = () => openPassModal();
-document.getElementById("btnCancelPass").onclick = () => closePassModal();
-document.getElementById("btnEnter").onclick = () => tryLogin();
-passInput.addEventListener("keydown", (e)=>{ if(e.key==="Enter") tryLogin(); });
-
-function openPassModal(){
-  loginWarn.style.display = "none";
-  modalBack.style.display = "flex";
-  passInput.value = "";
-  setTimeout(()=>passInput.focus(), 50);
-}
-function closePassModal(){
-  modalBack.style.display = "none";
-}
-function tryLogin(){
-  const ok = passInput.value === CONFIG.PASSWORD;
-  if(!ok){
-    loginWarn.style.display = "block";
-    return;
+  /* =========================
+     UTIL
+     ========================= */
+  function brlToCent(brl){
+    const s = String(brl).trim().replace(/\./g,"").replace(",",".");
+    const v = Number(s);
+    return Math.round(v*100);
   }
-  closePassModal();
-  loginWarn.style.display = "none";
-  const now = Date.now();
-  if(rememberChk.checked){
-    localStorage.setItem("ASGEST_AUTH_UNTIL", String(now + 24*60*60*1000));
-  }else{
-    sessionStorage.setItem("ASGEST_AUTH", "1");
+  function centToBRL(cent){
+    const v = (cent/100);
+    return v.toLocaleString("pt-BR", {style:"currency", currency:"BRL"});
   }
-  enterApp();
-}
-function isAuthed(){
-  const until = Number(localStorage.getItem("ASGEST_AUTH_UNTIL") || "0");
-  if(Date.now() < until) return true;
-  if(sessionStorage.getItem("ASGEST_AUTH")==="1") return true;
-  return false;
-}
-function enterApp(){
-  loginView.classList.add("hidden");
-  appView.classList.remove("hidden");
-  initUI();
-  applySelection();
-}
-function logout(){
-  sessionStorage.removeItem("ASGEST_AUTH");
-  localStorage.removeItem("ASGEST_AUTH_UNTIL");
-  location.reload();
-}
-document.getElementById("btnLogout").onclick = logout;
-
-/* =========================
-   ABOUT MODAL
-   ========================= */
-const aboutBack = document.getElementById("aboutBack");
-document.getElementById("btnAbout").onclick = ()=> aboutBack.style.display = "flex";
-document.getElementById("btnCloseAbout").onclick = ()=> aboutBack.style.display = "none";
-aboutBack.addEventListener("click",(e)=>{ if(e.target===aboutBack) aboutBack.style.display="none"; });
-modalBack.addEventListener("click",(e)=>{ if(e.target===modalBack) closePassModal(); });
-
-/* =========================
-   UI + FILTROS
-   ========================= */
-const selVisao = document.getElementById("selVisao");
-const fieldSemestre = document.getElementById("fieldSemestre");
-const fieldTrimestre = document.getElementById("fieldTrimestre");
-const fieldMes = document.getElementById("fieldMes");
-const selSemestre = document.getElementById("selSemestre");
-const selTrimestre = document.getElementById("selTrimestre");
-const selMes = document.getElementById("selMes");
-
-const pillPeriodo = document.getElementById("pillPeriodo");
-
-selVisao.onchange = () => { toggleFields(); applySelection(); };
-selSemestre.onchange = () => applySelection();
-selTrimestre.onchange = () => applySelection();
-selMes.onchange = () => applySelection();
-
-function initUI(){
-  // preencher meses (2025-01 .. 2025-12)
-  const meses = [...new Set(DATA.map(d=>d.ym))].sort();
-  selMes.innerHTML = meses.map(ym => `<option value="${ym}">${ymToPretty(ym)}</option>`).join("");
-  toggleFields();
-}
-
-function toggleFields(){
-  const v = selVisao.value;
-  fieldSemestre.classList.toggle("hidden", v!=="semestre");
-  fieldTrimestre.classList.toggle("hidden", v!=="trimestre");
-  fieldMes.classList.toggle("hidden", v!=="mes");
-}
-
-function rangeForSelection(){
-  const v = selVisao.value;
-  const y = CONFIG.ANO_BASE;
-  if(v==="ano"){
-    return {start:`${y}-01`, end:`${y}-12`, label:`Ano ${y} (Jan → Dez)`};
+  function fmtInt(n){
+    return n.toLocaleString("pt-BR");
   }
-  if(v==="semestre"){
-    const s = selSemestre.value;
-    if(s==="S1") return {start:`${y}-01`, end:`${y}-06`, label:`Semestre 1 • ${y} (Jan → Jun)`};
-    return {start:`${y}-07`, end:`${y}-12`, label:`Semestre 2 • ${y} (Jul → Dez)`};
+  function ymToPt(ym){
+    const [y,m] = ym.split("-").map(Number);
+    const nomes = ["jan","fev","mar","abr","mai","jun","jul","ago","set","out","nov","dez"];
+    return `${nomes[m-1]}/${String(y).slice(2)}`;
   }
-  if(v==="trimestre"){
-    const t = selTrimestre.value;
-    if(t==="T1") return {start:`${y}-01`, end:`${y}-03`, label:`Trimestre 1 • ${y} (Jan → Mar)`};
-    if(t==="T2") return {start:`${y}-04`, end:`${y}-06`, label:`Trimestre 2 • ${y} (Abr → Jun)`};
-    if(t==="T3") return {start:`${y}-07`, end:`${y}-09`, label:`Trimestre 3 • ${y} (Jul → Set)`};
-    return {start:`${y}-10`, end:`${y}-12`, label:`Trimestre 4 • ${y} (Out → Dez)`};
-  }
-  // mes
-  const ym = selMes.value;
-  return {start:ym, end:ym, label:`${ymToPretty(ym)}`};
-}
-
-function inRange(ym, start, end){
-  return ym >= start && ym <= end;
-}
-
-function applySelection(){
-  const r = rangeForSelection();
-  pillPeriodo.textContent = `Período: ${r.label}`;
-
-  const rows = DATA.filter(d => inRange(d.ym, r.start, r.end));
-
-  // agregação por cartão
-  const map = new Map(); // card -> {qtd, valorCent}
-  for(const d of rows){
-    const cur = map.get(d.card) || {qtd:0, valorCent:0};
-    cur.qtd += d.qtd;
-    cur.valorCent += d.valorCent;
-    map.set(d.card, cur);
+  function ymToPretty(ym){
+    const [y,m] = ym.split("-").map(Number);
+    const nomes = ["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"];
+    return `${nomes[m-1]} / ${y}`;
   }
 
-  const cards = [...map.entries()].map(([card, agg]) => ({card, ...agg}))
-    .sort((a,b)=> b.valorCent - a.valorCent);
+  /* =========================
+     DADOS (BASE LIMPA 2025)
+     >>> NÃO ALTERADO (apenas colado aqui igual à base final) <<<
+     ========================= */
+  const DATA = [
+    // jan/25
+    ["2025-01","BANRICARD",22,"2.353,35"],
+    ["2025-01","BANRISUL",235,"23.064,09"],
+    ["2025-01","VERDECARD",6,"728,73"],
+    ["2025-01","AMEX",10,"1.077,02"],
+    ["2025-01","CABAL VOUCHER",3,"62,34"],
+    ["2025-01","ELO CREDIT",53,"5.373,29"],
+    ["2025-01","ELO DEBIT",161,"13.148,66"],
+    ["2025-01","HIPERCARD CREDIT",1,"30,58"],
+    ["2025-01","MASTERCARD CREDI",1310,"112.474,16"],
+    ["2025-01","MASTERCARD DEBIT",1609,"115.899,63"],
+    ["2025-01","VISA CREDITO",1081,"108.914,42"],
+    ["2025-01","VISA DEBITO",1385,"107.778,24"],
 
-  const totalValor = cards.reduce((s,x)=>s+x.valorCent,0);
-  const totalQtd = cards.reduce((s,x)=>s+x.qtd,0);
+    // fev/25
+    ["2025-02","BANRICARD",31,"2.458,76"],
+    ["2025-02","BANRISUL",429,"38.085,85"],
+    ["2025-02","VERDECARD",20,"832,77"],
+    ["2025-02","AMEX",4,"322,33"],
+    ["2025-02","CABAL DEBIT",1,"23,98"],
+    ["2025-02","CABAL VOUCHER",17,"924,65"],
+    ["2025-02","ELO CREDIT",85,"7.623,49"],
+    ["2025-02","ELO DEBIT",225,"17.169,02"],
+    ["2025-02","HIPERCARD CREDIT",4,"293,43"],
+    ["2025-02","MASTERCARD CREDI",1329,"116.281,21"],
+    ["2025-02","MASTERCARD DEBIT",1712,"126.941,10"],
+    ["2025-02","VISA CREDITO",974,"89.734,56"],
+    ["2025-02","VISA DEBITO",1504,"112.837,54"],
 
-  // PIX x Cartões
-  const pix = map.get("PIX") || {qtd:0, valorCent:0};
-  const cardsSemPixValor = totalValor - pix.valorCent;
+    // mar/25
+    ["2025-03","BANRICARD",30,"3.400,67"],
+    ["2025-03","BANRISUL",372,"34.825,68"],
+    ["2025-03","VERDECARD",3,"404,64"],
+    ["2025-03","AMEX",11,"1.698,92"],
+    ["2025-03","CABAL DEBIT",2,"133,34"],
+    ["2025-03","CABAL VOUCHER",20,"515,29"],
+    ["2025-03","ELO CREDIT",66,"6.166,98"],
+    ["2025-03","ELO DEBIT",241,"19.620,96"],
+    ["2025-03","HIPERCARD CREDIT",3,"407,22"],
+    ["2025-03","MASTERCARD CREDI",1274,"107.028,92"],
+    ["2025-03","MASTERCARD DEBIT",1728,"122.143,42"],
+    ["2025-03","VISA CREDITO",865,"81.480,77"],
+    ["2025-03","VISA DEBITO",1445,"119.252,70"],
 
-  // KPIs
-  setText("kTotal", centToBRL(totalValor));
-  setText("kTotalMeta", `Período selecionado: ${r.start} → ${r.end}`);
-  setText("kCupons", fmtInt(totalQtd));
-  setText("kPix", centToBRL(pix.valorCent));
-  setText("kCards", centToBRL(cardsSemPixValor));
+    // abr/25
+    ["2025-04","BANRICARD",10,"673,24"],
+    ["2025-04","BANRISUL",280,"25.020,93"],
+    ["2025-04","VERDECARD",13,"513,55"],
+    ["2025-04","AMEX",8,"866,46"],
+    ["2025-04","CABAL DEBIT",3,"212,22"],
+    ["2025-04","CABAL VOUCHER",29,"898,44"],
+    ["2025-04","ELO CREDIT",62,"4.909,02"],
+    ["2025-04","ELO DEBIT",154,"11.359,81"],
+    ["2025-04","HIPERCARD CREDIT",2,"84,12"],
+    ["2025-04","MASTERCARD CREDI",948,"76.157,19"],
+    ["2025-04","MASTERCARD DEBIT",1316,"88.085,47"],
+    ["2025-04","VISA CREDITO",650,"63.916,49"],
+    ["2025-04","VISA DEBITO",1134,"75.550,96"],
 
-  const pixPct = totalValor>0 ? (pix.valorCent/totalValor*100) : 0;
-  const cardsPct = 100 - pixPct;
-  setText("kPixPct", `${pixPct.toFixed(1).replace(".",",")}% do total`);
-  setText("kCardsPct", `${cardsPct.toFixed(1).replace(".",",")}% do total`);
+    // mai/25
+    ["2025-05","BANRICARD",21,"916,15"],
+    ["2025-05","BANRISUL",276,"25.230,06"],
+    ["2025-05","VERDECARD",9,"791,57"],
+    ["2025-05","AMEX",9,"1.228,50"],
+    ["2025-05","CABAL DEBIT",7,"420,35"],
+    ["2025-05","CABAL VOUCHER",24,"919,88"],
+    ["2025-05","ELO CREDIT",47,"3.977,24"],
+    ["2025-05","ELO DEBIT",125,"11.182,79"],
+    ["2025-05","HIPERCARD CREDIT",6,"301,57"],
+    ["2025-05","MASTERCARD CREDI",765,"64.637,82"],
+    ["2025-05","MASTERCARD DEBIT",1204,"81.625,67"],
+    ["2025-05","VISA CREDITO",516,"50.790,78"],
+    ["2025-05","VISA DEBITO",1023,"70.862,31"],
 
-  // tabela
-  renderTable(cards, totalValor, totalQtd);
+    // jun/25
+    ["2025-06","BANRICARD",2,"97,24"],
+    ["2025-06","BANRISUL",252,"22.360,57"],
+    ["2025-06","VERDECARD",7,"795,43"],
+    ["2025-06","AMEX",5,"436,94"],
+    ["2025-06","CABAL DEBIT",7,"892,59"],
+    ["2025-06","CABAL VOUCHER",24,"953,64"],
+    ["2025-06","ELO CREDIT",38,"4.732,47"],
+    ["2025-06","ELO DEBIT",137,"11.961,49"],
+    ["2025-06","MASTERCARD CREDI",637,"49.182,73"],
+    ["2025-06","MASTERCARD DEBIT",1097,"73.160,51"],
+    ["2025-06","VISA CREDITO",356,"30.055,76"],
+    ["2025-06","VISA DEBITO",848,"60.248,03"],
 
-  // gráficos
-  renderBar(cards, totalValor);
-  renderDonut(pix.valorCent, cardsSemPixValor);
-}
+    // jul/25 (corrigido: ELO e CABAL somados/padronizados)
+    ["2025-07","BANRICARD",3,"176,58"],
+    ["2025-07","BANRISUL",251,"22.388,62"],
+    ["2025-07","VERDECARD",17,"1.039,70"],
+    ["2025-07","CABAL DEBIT",5,"195,09"],
+    ["2025-07","CABAL VOUCHER",22,"800,51"],
+    ["2025-07","ELO CREDIT",48,"3.399,08"],
+    ["2025-07","ELO DEBIT",119,"9.826,91"],
+    ["2025-07","MASTERCARD CREDI",716,"63.696,55"],
+    ["2025-07","MASTERCARD DEBIT",1045,"67.443,02"],
+    ["2025-07","VISA CREDITO",470,"41.634,87"],
+    ["2025-07","VISA DEBITO",885,"67.507,64"],
+    ["2025-07","MAESTRO",29,"1.393,49"],
+    ["2025-07","MASTERCARD",16,"1.444,75"],
+    ["2025-07","VISA",7,"250,85"],
+    ["2025-07","VISA ELECTRON",22,"1.165,52"],
 
-function setText(id, v){ document.getElementById(id).textContent = v; }
+    // ago/25
+    ["2025-08","BANRICARD",8,"404,43"],
+    ["2025-08","BANRISUL",221,"22.299,35"],
+    ["2025-08","VERDECARD",22,"1.683,43"],
+    ["2025-08","AMEX",3,"520,09"],
+    ["2025-08","CABAL DEBIT",4,"772,55"],
+    ["2025-08","ELO CREDIT",44,"3.669,14"],
+    ["2025-08","ELO DEBIT",143,"11.564,25"],
+    ["2025-08","MAESTRO",1105,"71.896,91"],
+    ["2025-08","MASTERCARD",695,"55.388,05"],
+    ["2025-08","VISA",467,"40.650,36"],
+    ["2025-08","VISA ELECTRON",902,"71.183,78"],
+    ["2025-08","PIX",506,"26.351,40"],
 
-function renderTable(cards, totalValor, totalQtd){
-  const body = document.getElementById("tblBody");
-  body.innerHTML = "";
+    // set/25
+    ["2025-09","BANRICARD",1,"101,57"],
+    ["2025-09","BANRISUL",254,"20.371,08"],
+    ["2025-09","VERDECARD",13,"1.597,63"],
+    ["2025-09","AMEX",5,"624,21"],
+    ["2025-09","CABAL DEBIT",5,"512,59"],
+    ["2025-09","ELO CREDIT",48,"3.923,28"],
+    ["2025-09","ELO DEBIT",129,"9.028,76"],
+    ["2025-09","MAESTRO",1108,"66.850,18"],
+    ["2025-09","MASTERCARD",734,"53.782,87"],
+    ["2025-09","VISA",441,"34.476,06"],
+    ["2025-09","VISA ELECTRON",899,"62.269,79"],
+    ["2025-09","PIX",905,"51.719,76"],
 
-  const maxRows = 50; // segurança visual
-  const show = cards.slice(0, maxRows);
+    // out/25
+    ["2025-10","BANRICARD",9,"404,69"],
+    ["2025-10","BANRISUL",303,"26.552,36"],
+    ["2025-10","VERDECARD",21,"2.015,24"],
+    ["2025-10","AMEX",4,"510,85"],
+    ["2025-10","CABAL DEBIT",11,"719,08"],
+    ["2025-10","ELO CREDIT",48,"3.852,71"],
+    ["2025-10","ELO DEBIT",122,"11.106,30"],
+    ["2025-10","MAESTRO",1291,"76.698,12"],
+    ["2025-10","MASTERCARD",868,"64.660,32"],
+    ["2025-10","VISA",518,"43.679,01"],
+    ["2025-10","VISA ELECTRON",957,"68.172,49"],
+    ["2025-10","PIX",989,"59.985,46"],
 
-  for(const it of show){
-    const pct = totalValor>0 ? (it.valorCent/totalValor*100) : 0;
-    const tr = document.createElement("tr");
-    tr.innerHTML = `
-      <td>${escapeHtml(it.card)}</td>
-      <td class="num">${fmtInt(it.qtd)}</td>
-      <td class="num">${centToBRL(it.valorCent)}</td>
-      <td class="num">${pct.toFixed(1).replace(".",",")}%</td>
-    `;
-    body.appendChild(tr);
+    // nov/25
+    ["2025-11","BANRICARD",15,"704,61"],
+    ["2025-11","BANRISUL",321,"28.765,05"],
+    ["2025-11","VERDECARD",18,"1.414,20"],
+    ["2025-11","AMEX",9,"760,23"],
+    ["2025-11","CABAL DEBIT",9,"623,00"],
+    ["2025-11","ELO CREDIT",71,"6.204,76"],
+    ["2025-11","ELO DEBIT",150,"12.045,96"],
+    ["2025-11","MAESTRO",1478,"95.520,54"],
+    ["2025-11","MASTERCARD",1148,"98.985,05"],
+    ["2025-11","VISA",703,"64.987,26"],
+    ["2025-11","VISA ELECTRON",1248,"93.219,82"],
+    ["2025-11","PIX",1085,"68.664,01"],
+
+    // dez/25
+    ["2025-12","BANRICARD",20,"2.667,25"],
+    ["2025-12","BANRISUL",561,"51.976,39"],
+    ["2025-12","VERDECARD",15,"1.937,91"],
+    ["2025-12","AMEX",18,"3.279,18"],
+    ["2025-12","CABAL DEBIT",4,"590,45"],
+    ["2025-12","ELO CREDIT",153,"12.368,13"],
+    ["2025-12","ELO DEBIT",381,"33.942,14"],
+    ["2025-12","MAESTRO",2748,"213.166,50"],
+    ["2025-12","MASTERCARD",2192,"241.319,05"],
+    ["2025-12","VISA",1568,"181.585,96"],
+    ["2025-12","VISA ELECTRON",2452,"216.998,72"],
+    ["2025-12","PIX",1943,"161.075,06"],
+  ].map(([ym, card, qtd, brl]) => ({
+    ym,
+    mesLabel: ymToPt(ym),
+    card,
+    qtd: Number(qtd),
+    valorCent: brlToCent(brl)
+  }));
+
+  /* =========================
+     AUTH (senha simples)
+     ========================= */
+  const loginView = document.getElementById("loginView");
+  const appView = document.getElementById("appView");
+  const modalBack = document.getElementById("modalBack");
+  const passInput = document.getElementById("passInput");
+  const rememberChk = document.getElementById("rememberChk");
+  const loginWarn = document.getElementById("loginWarn");
+
+  document.getElementById("devName").textContent = CONFIG.DEV_NAME;
+  document.getElementById("subline").textContent = `Cliente: ${CONFIG.CLIENTE} • CNPJ: ${CONFIG.CNPJ}`;
+
+  document.getElementById("btnOpenPass").onclick = () => openPassModal();
+  document.getElementById("btnCancelPass").onclick = () => closePassModal();
+  document.getElementById("btnEnter").onclick = () => tryLogin();
+  passInput.addEventListener("keydown", (e)=>{ if(e.key==="Enter") tryLogin(); });
+
+  function openPassModal(){
+    loginWarn.style.display = "none";
+    modalBack.style.display = "flex";
+    passInput.value = "";
+    setTimeout(()=>passInput.focus(), 50);
+  }
+  function closePassModal(){
+    modalBack.style.display = "none";
+  }
+  function tryLogin(){
+    const ok = passInput.value === CONFIG.PASSWORD;
+    if(!ok){
+      loginWarn.style.display = "block";
+      return;
+    }
+    closePassModal();
+    loginWarn.style.display = "none";
+    const now = Date.now();
+    if(rememberChk.checked){
+      localStorage.setItem("ASGEST_AUTH_UNTIL", String(now + 24*60*60*1000));
+    }else{
+      sessionStorage.setItem("ASGEST_AUTH", "1");
+    }
+    enterApp();
+  }
+  function isAuthed(){
+    const until = Number(localStorage.getItem("ASGEST_AUTH_UNTIL") || "0");
+    if(Date.now() < until) return true;
+    if(sessionStorage.getItem("ASGEST_AUTH")==="1") return true;
+    return false;
+  }
+  function enterApp(){
+    loginView.classList.add("hidden");
+    appView.classList.remove("hidden");
+    initUI();
+    applySelection();
+  }
+  function logout(){
+    sessionStorage.removeItem("ASGEST_AUTH");
+    localStorage.removeItem("ASGEST_AUTH_UNTIL");
+    location.reload();
+  }
+  document.getElementById("btnLogout").onclick = logout;
+
+  /* =========================
+     ABOUT MODAL
+     ========================= */
+  const aboutBack = document.getElementById("aboutBack");
+  document.getElementById("btnAbout").onclick = ()=> aboutBack.style.display = "flex";
+  document.getElementById("btnCloseAbout").onclick = ()=> aboutBack.style.display = "none";
+  aboutBack.addEventListener("click",(e)=>{ if(e.target===aboutBack) aboutBack.style.display="none"; });
+  modalBack.addEventListener("click",(e)=>{ if(e.target===modalBack) closePassModal(); });
+
+  /* =========================
+     UI + FILTROS
+     ========================= */
+  const selVisao = document.getElementById("selVisao");
+  const fieldSemestre = document.getElementById("fieldSemestre");
+  const fieldTrimestre = document.getElementById("fieldTrimestre");
+  const fieldMes = document.getElementById("fieldMes");
+  const selSemestre = document.getElementById("selSemestre");
+  const selTrimestre = document.getElementById("selTrimestre");
+  const selMes = document.getElementById("selMes");
+
+  const pillPeriodo = document.getElementById("pillPeriodo");
+
+  selVisao.onchange = () => { toggleFields(); applySelection(); };
+  selSemestre.onchange = () => applySelection();
+  selTrimestre.onchange = () => applySelection();
+  selMes.onchange = () => applySelection();
+
+  function initUI(){
+    const meses = [...new Set(DATA.map(d=>d.ym))].sort();
+    selMes.innerHTML = meses.map(ym => `<option value="${ym}">${ymToPretty(ym)}</option>`).join("");
+    toggleFields();
+    window.addEventListener("resize", debounce(()=>applySelection(), 200));
   }
 
-  setText("tCupons", fmtInt(totalQtd));
-  setText("tValor", centToBRL(totalValor));
-}
+  function toggleFields(){
+    const v = selVisao.value;
+    fieldSemestre.classList.toggle("hidden", v!=="semestre");
+    fieldTrimestre.classList.toggle("hidden", v!=="trimestre");
+    fieldMes.classList.toggle("hidden", v!=="mes");
+  }
 
-function escapeHtml(s){
-  return String(s)
-    .replaceAll("&","&amp;")
-    .replaceAll("<","&lt;")
-    .replaceAll(">","&gt;")
-    .replaceAll('"',"&quot;")
-    .replaceAll("'","&#039;");
-}
+  function rangeForSelection(){
+    const v = selVisao.value;
+    const y = CONFIG.ANO_BASE;
+    if(v==="ano"){
+      return {start:`${y}-01`, end:`${y}-12`, label:`Ano ${y} (Jan → Dez)`};
+    }
+    if(v==="semestre"){
+      const s = selSemestre.value;
+      if(s==="S1") return {start:`${y}-01`, end:`${y}-06`, label:`Semestre 1 • ${y} (Jan → Jun)`};
+      return {start:`${y}-07`, end:`${y}-12`, label:`Semestre 2 • ${y} (Jul → Dez)`};
+    }
+    if(v==="trimestre"){
+      const t = selTrimestre.value;
+      if(t==="T1") return {start:`${y}-01`, end:`${y}-03`, label:`Trimestre 1 • ${y} (Jan → Mar)`};
+      if(t==="T2") return {start:`${y}-04`, end:`${y}-06`, label:`Trimestre 2 • ${y} (Abr → Jun)`};
+      if(t==="T3") return {start:`${y}-07`, end:`${y}-09`, label:`Trimestre 3 • ${y} (Jul → Set)`};
+      return {start:`${y}-10`, end:`${y}-12`, label:`Trimestre 4 • ${y} (Out → Dez)`};
+    }
+    const ym = selMes.value;
+    return {start:ym, end:ym, label:`${ymToPretty(ym)}`};
+  }
 
-/* =========================
-   CHARTS (Canvas – sem libs)
-   ========================= */
-function clearCanvas(ctx, w, h){
-  ctx.clearRect(0,0,w,h);
-}
+  function inRange(ym, start, end){
+    return ym >= start && ym <= end;
+  }
 
-function renderBar(cards, totalValor){
-  const canvas = document.getElementById("barChart");
-  const ctx = canvas.getContext("2d");
-  const w = canvas.width, h = canvas.height;
-  clearCanvas(ctx,w,h);
+  function applySelection(){
+    const r = rangeForSelection();
+    pillPeriodo.textContent = `Período: ${r.label}`;
 
-  // top 10 (sem PIX pode ficar, mas deixamos como dado)
-  const top = cards.slice(0, 10);
-  const maxVal = Math.max(...top.map(x=>x.valorCent), 1);
+    const rows = DATA.filter(d => inRange(d.ym, r.start, r.end));
 
-  // layout
-  const pad = 18;
-  const left = 170; // espaço labels
-  const topY = 18;
-  const rowH = 26;
-  const barH = 12;
-  const gap = 12;
+    const map = new Map(); // card -> {qtd, valorCent}
+    for(const d of rows){
+      const cur = map.get(d.card) || {qtd:0, valorCent:0};
+      cur.qtd += d.qtd;
+      cur.valorCent += d.valorCent;
+      map.set(d.card, cur);
+    }
 
-  // título sutil
-  ctx.font = "700 12px system-ui";
-  ctx.fillStyle = "rgba(154,166,193,.95)";
-  ctx.fillText("Top 10 cartões (valor)", pad, 14);
+    const cards = [...map.entries()].map(([card, agg]) => ({card, ...agg}))
+      .sort((a,b)=> b.valorCent - a.valorCent);
 
-  // barras
-  const startY = topY + 10;
-  top.forEach((it, i)=>{
-    const y = startY + i*(rowH+gap);
-    const label = it.card.length>18 ? it.card.slice(0,18)+"…" : it.card;
+    const totalValor = cards.reduce((s,x)=>s+x.valorCent,0);
+    const totalQtd = cards.reduce((s,x)=>s+x.qtd,0);
 
-    // label
-    ctx.font = "800 12px system-ui";
-    ctx.fillStyle = "rgba(234,240,255,.95)";
-    ctx.fillText(label, pad, y + 12);
+    const pix = map.get("PIX") || {qtd:0, valorCent:0};
+    const cardsSemPixValor = totalValor - pix.valorCent;
 
-    // bg bar
-    const barX = left;
-    const barY = y + 2;
-    const barW = w - left - pad;
-    roundedRect(ctx, barX, barY, barW, barH, 999, "rgba(26,39,65,.95)");
+    setText("kTotal", centToBRL(totalValor));
+    setText("kTotalMeta", `Período selecionado: ${r.start} → ${r.end}`);
+    setText("kCupons", fmtInt(totalQtd));
+    setText("kPix", centToBRL(pix.valorCent));
+    setText("kCards", centToBRL(cardsSemPixValor));
 
-    // value bar
-    const fillW = Math.max(2, Math.round((it.valorCent/maxVal)*barW));
-    const grad = ctx.createLinearGradient(barX,0,barX+barW,0);
-    grad.addColorStop(0, "rgba(56,189,248,.95)");
-    grad.addColorStop(1, "rgba(34,197,94,.85)");
-    roundedRect(ctx, barX, barY, fillW, barH, 999, grad);
+    const pixPct = totalValor>0 ? (pix.valorCent/totalValor*100) : 0;
+    const cardsPct = 100 - pixPct;
+    setText("kPixPct", `${pixPct.toFixed(1).replace(".",",")}% do total`);
+    setText("kCardsPct", `${cardsPct.toFixed(1).replace(".",",")}% do total`);
 
-    // value
+    renderTable(cards, totalValor, totalQtd);
+    renderBar(cards, totalValor);                 // ✅ Top com barras por %
+    renderDonut(pix.valorCent, cardsSemPixValor);
+  }
+
+  function setText(id, v){ document.getElementById(id).textContent = v; }
+
+  function renderTable(cards, totalValor, totalQtd){
+    const body = document.getElementById("tblBody");
+    body.innerHTML = "";
+
+    const maxRows = 50;
+    const show = cards.slice(0, maxRows);
+
+    for(const it of show){
+      const pct = totalValor>0 ? (it.valorCent/totalValor*100) : 0;
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td title="${escapeHtml(it.card)}">${escapeHtml(it.card)}</td>
+        <td class="num">${fmtInt(it.qtd)}</td>
+        <td class="num">${centToBRL(it.valorCent)}</td>
+        <td class="num">${pct.toFixed(1).replace(".",",")}%</td>
+      `;
+      body.appendChild(tr);
+    }
+
+    setText("tCupons", fmtInt(totalQtd));
+    setText("tValor", centToBRL(totalValor));
+  }
+
+  function escapeHtml(s){
+    return String(s)
+      .replaceAll("&","&amp;")
+      .replaceAll("<","&lt;")
+      .replaceAll(">","&gt;")
+      .replaceAll('"',"&quot;")
+      .replaceAll("'","&#039;");
+  }
+
+  /* =========================
+     CHARTS (Canvas – sem libs)
+     ========================= */
+  function setupHiDPICanvas(canvas, cssHeight = 320){
+    const dpr = Math.max(1, window.devicePixelRatio || 1);
+    const cssWidth = canvas.clientWidth || 600;
+
+    canvas.style.height = cssHeight + "px";
+    const w = Math.round(cssWidth * dpr);
+    const h = Math.round(cssHeight * dpr);
+
+    if(canvas.width !== w) canvas.width = w;
+    if(canvas.height !== h) canvas.height = h;
+
+    const ctx = canvas.getContext("2d");
+    ctx.setTransform(dpr,0,0,dpr,0,0); // desenha em CSS pixels
+    return {ctx, w: cssWidth, h: cssHeight};
+  }
+
+  function clearCanvas(ctx, w, h){
+    ctx.clearRect(0,0,w,h);
+  }
+
+  /* ===== TOP CARTÕES: redimensiona + barra de progresso por percentual ===== */
+  function renderBar(cards, totalValor){
+    const canvas = document.getElementById("barChart");
+    const {ctx, w, h} = setupHiDPICanvas(canvas, 340);
+    clearCanvas(ctx,w,h);
+
+    const top = cards
+      .filter(x => x.valorCent > 0)
+      .slice(0, 10);
+
+    const pad = 18;
+    const footer = 26;       // reserva pro rodapé do gráfico
+    const headerH = 26;
+    const startY = headerH + 10;
+
+    // Área do label (dinâmica conforme largura)
+    const left = Math.max(130, Math.min(260, Math.round(w * 0.42)));
+
+    // Altura por linha (dinâmica)
+    const availableH = (h - footer) - startY;
+    const rowStep = Math.max(26, Math.floor(availableH / Math.max(top.length, 1)));
+    const barH = 12;
+
+    // Título
     ctx.font = "800 12px system-ui";
     ctx.fillStyle = "rgba(154,166,193,.95)";
-    const vtxt = centToBRL(it.valorCent);
-    ctx.fillText(vtxt, barX + barW - ctx.measureText(vtxt).width, y + 12);
-  });
+    ctx.fillText("Top cartões (participação no período)", pad, 16);
 
-  // rodapé
-  ctx.font = "700 11px system-ui";
-  ctx.fillStyle = "rgba(154,166,193,.85)";
-  ctx.fillText(`Total do período: ${centToBRL(totalValor)}`, pad, h - 10);
-}
+    top.forEach((it, i) => {
+      const y = startY + i * rowStep;
+      if (y + rowStep > h - footer) return;
 
-function renderDonut(pixCent, cardsCent){
-  const canvas = document.getElementById("donutChart");
-  const ctx = canvas.getContext("2d");
-  const w = canvas.width, h = canvas.height;
-  clearCanvas(ctx,w,h);
+      const pct = totalValor > 0 ? (it.valorCent / totalValor * 100) : 0;
+      const pctClamped = Math.max(0, Math.min(100, pct));
 
-  const total = pixCent + cardsCent;
-  const pixPct = total>0 ? pixCent/total : 0;
+      // Label esquerdo
+      ctx.font = "900 12px system-ui";
+      ctx.fillStyle = "rgba(234,240,255,.95)";
+      const maxLabelChars = w < 520 ? 18 : 26;
+      const label = it.card.length > maxLabelChars ? it.card.slice(0, maxLabelChars) + "…" : it.card;
+      ctx.fillText(label, pad, y + 14);
 
-  const cx = Math.round(w*0.33);
-  const cy = Math.round(h*0.52);
-  const r = Math.round(Math.min(w,h)*0.28);
-  const thick = 18;
+      // Barra (100%)
+      const barX = left;
+      const barW = Math.max(90, w - left - pad);
+      const barY = y + 6;
 
-  // title
-  ctx.font = "700 12px system-ui";
-  ctx.fillStyle = "rgba(154,166,193,.95)";
-  ctx.fillText("PIX x Cartões", 18, 14);
+      roundedRect(ctx, barX, barY, barW, barH, 999, "rgba(26,39,65,.95)");
 
-  // ring bg
-  drawArc(ctx, cx, cy, r, 0, Math.PI*2, thick, "rgba(26,39,65,.95)");
+      // Preenchimento (% do período)
+      const fillW = Math.max(2, Math.round((pctClamped / 100) * barW));
+      const grad = ctx.createLinearGradient(barX, 0, barX + barW, 0);
+      grad.addColorStop(0, "rgba(56,189,248,.95)");
+      grad.addColorStop(1, "rgba(34,197,94,.85)");
+      roundedRect(ctx, barX, barY, fillW, barH, 999, grad);
 
-  // pix slice
-  const start = -Math.PI/2;
-  const mid = start + pixPct*(Math.PI*2);
-  const grad = ctx.createLinearGradient(cx-r,0,cx+r,0);
-  grad.addColorStop(0, "rgba(56,189,248,.95)");
-  grad.addColorStop(1, "rgba(34,197,94,.85)");
-  drawArc(ctx, cx, cy, r, start, mid, thick, grad);
+      // Valor + %
+      ctx.font = "800 12px system-ui";
+      ctx.fillStyle = "rgba(154,166,193,.95)";
+      const vtxt = `${centToBRL(it.valorCent)} • ${pctClamped.toFixed(1).replace(".",",")}%`;
+      const tw = ctx.measureText(vtxt).width;
+      const tx = Math.max(barX + 8, (barX + barW) - tw);
+      ctx.fillText(vtxt, tx, y + 14);
+    });
 
-  // center text
-  ctx.font = "900 18px system-ui";
-  ctx.fillStyle = "rgba(234,240,255,.95)";
-  const pctTxt = `${(pixPct*100).toFixed(1).replace(".",",")}%`;
-  ctx.fillText(pctTxt, cx - ctx.measureText(pctTxt).width/2, cy+6);
-
-  ctx.font = "800 11px system-ui";
-  ctx.fillStyle = "rgba(154,166,193,.95)";
-  const sub = "PIX do período";
-  ctx.fillText(sub, cx - ctx.measureText(sub).width/2, cy+24);
-
-  // legend
-  const lx = Math.round(w*0.60);
-  const ly = Math.round(h*0.30);
-  legendLine(ctx, lx, ly, "PIX", centToBRL(pixCent), "rgba(56,189,248,.95)");
-  legendLine(ctx, lx, ly+44, "Cartões", centToBRL(cardsCent), "rgba(34,197,94,.85)");
-}
-
-function legendLine(ctx, x, y, label, value, color){
-  ctx.fillStyle = color;
-  ctx.fillRect(x, y, 12, 12);
-  ctx.font = "900 12px system-ui";
-  ctx.fillStyle = "rgba(234,240,255,.95)";
-  ctx.fillText(label, x+18, y+11);
-  ctx.font = "800 12px system-ui";
-  ctx.fillStyle = "rgba(154,166,193,.95)";
-  ctx.fillText(value, x+18, y+30);
-}
-
-function roundedRect(ctx, x, y, w, h, r, fill){
-  ctx.beginPath();
-  const rr = Math.min(r, h/2, w/2);
-  ctx.moveTo(x+rr, y);
-  ctx.arcTo(x+w, y, x+w, y+h, rr);
-  ctx.arcTo(x+w, y+h, x, y+h, rr);
-  ctx.arcTo(x, y+h, x, y, rr);
-  ctx.arcTo(x, y, x+w, y, rr);
-  ctx.closePath();
-  ctx.fillStyle = fill;
-  ctx.fill();
-}
-
-function drawArc(ctx, cx, cy, r, a0, a1, width, stroke){
-  ctx.beginPath();
-  ctx.arc(cx, cy, r, a0, a1);
-  ctx.strokeStyle = stroke;
-  ctx.lineWidth = width;
-  ctx.lineCap = "round";
-  ctx.stroke();
-}
-
-/* =========================
-   START
-   ========================= */
-(function start(){
-  document.getElementById("analysisText").innerHTML = `
-    Este painel consolida o faturamento por <b>cartão/bandeira</b> e <b>PIX</b> do ano de <b>${CONFIG.ANO_BASE}</b>,
-    descartando a rede. Use os filtros para ver o <b>total do ano</b>, <b>semestres</b>, <b>trimestres</b> e <b>meses</b>.
-    O gráfico destaca os <b>10 cartões</b> com maior faturamento no período selecionado.
-  `;
-
-  if(isAuthed()){
-    enterApp();
-  }else{
-    loginView.classList.remove("hidden");
-    appView.classList.add("hidden");
+    // Rodapé do gráfico
+    ctx.font = "700 11px system-ui";
+    ctx.fillStyle = "rgba(154,166,193,.85)";
+    ctx.fillText(`Total do período: ${centToBRL(totalValor)}`, pad, h - 10);
   }
-})();
-</script>
+
+  function renderDonut(pixCent, cardsCent){
+    const canvas = document.getElementById("donutChart");
+    const {ctx, w, h} = setupHiDPICanvas(canvas, 320);
+    clearCanvas(ctx,w,h);
+
+    const total = pixCent + cardsCent;
+    const pixPct = total>0 ? pixCent/total : 0;
+
+    const cx = Math.round(w*0.33);
+    const cy = Math.round(h*0.52);
+    const r = Math.round(Math.min(w,h)*0.28);
+    const thick = 18;
+
+    ctx.font = "700 12px system-ui";
+    ctx.fillStyle = "rgba(154,166,193,.95)";
+    ctx.fillText("PIX x Cartões", 18, 14);
+
+    drawArc(ctx, cx, cy, r, 0, Math.PI*2, thick, "rgba(26,39,65,.95)");
+
+    const start = -Math.PI/2;
+    const mid = start + pixPct*(Math.PI*2);
+    const grad = ctx.createLinearGradient(cx-r,0,cx+r,0);
+    grad.addColorStop(0, "rgba(56,189,248,.95)");
+    grad.addColorStop(1, "rgba(34,197,94,.85)");
+    drawArc(ctx, cx, cy, r, start, mid, thick, grad);
+
+    ctx.font = "900 18px system-ui";
+    ctx.fillStyle = "rgba(234,240,255,.95)";
+    const pctTxt = `${(pixPct*100).toFixed(1).replace(".",",")}%`;
+    ctx.fillText(pctTxt, cx - ctx.measureText(pctTxt).width/2, cy+6);
+
+    ctx.font = "800 11px system-ui";
+    ctx.fillStyle = "rgba(154,166,193,.95)";
+    const sub = "PIX do período";
+    ctx.fillText(sub, cx - ctx.measureText(sub).width/2, cy+24);
+
+    const lx = Math.round(w*0.60);
+    const ly = Math.round(h*0.30);
+    legendLine(ctx, lx, ly, "PIX", centToBRL(pixCent), "rgba(56,189,248,.95)");
+    legendLine(ctx, lx, ly+44, "Cartões", centToBRL(cardsCent), "rgba(34,197,94,.85)");
+  }
+
+  function legendLine(ctx, x, y, label, value, color){
+    ctx.fillStyle = color;
+    ctx.fillRect(x, y, 12, 12);
+    ctx.font = "900 12px system-ui";
+    ctx.fillStyle = "rgba(234,240,255,.95)";
+    ctx.fillText(label, x+18, y+11);
+    ctx.font = "800 12px system-ui";
+    ctx.fillStyle = "rgba(154,166,193,.95)";
+    ctx.fillText(value, x+18, y+30);
+  }
+
+  function roundedRect(ctx, x, y, w, h, r, fill){
+    ctx.beginPath();
+    const rr = Math.min(r, h/2, w/2);
+    ctx.moveTo(x+rr, y);
+    ctx.arcTo(x+w, y, x+w, y+h, rr);
+    ctx.arcTo(x+w, y+h, x, y+h, rr);
+    ctx.arcTo(x, y+h, x, y, rr);
+    ctx.arcTo(x, y, x+w, y, rr);
+    ctx.closePath();
+    ctx.fillStyle = fill;
+    ctx.fill();
+  }
+
+  function drawArc(ctx, cx, cy, r, a0, a1, width, stroke){
+    ctx.beginPath();
+    ctx.arc(cx, cy, r, a0, a1);
+    ctx.strokeStyle = stroke;
+    ctx.lineWidth = width;
+    ctx.lineCap = "round";
+    ctx.stroke();
+  }
+
+  function debounce(fn, ms){
+    let t;
+    return (...args)=>{
+      clearTimeout(t);
+      t = setTimeout(()=>fn(...args), ms);
+    };
+  }
+
+  /* =========================
+     START
+     ========================= */
+  (function start(){
+    document.getElementById("analysisText").innerHTML = `
+      Este painel consolida o faturamento por <b>cartão/bandeira</b> e <b>PIX</b> do ano de <b>${CONFIG.ANO_BASE}</b>,
+      descartando a rede. Use os filtros para ver o <b>total do ano</b>, <b>semestres</b>, <b>trimestres</b> e <b>meses</b>.
+      O gráfico destaca os <b>10 cartões</b> com maior faturamento no período selecionado.
+    `;
+
+    if(isAuthed()){
+      enterApp();
+    }else{
+      loginView.classList.remove("hidden");
+      appView.classList.add("hidden");
+    }
+  })();
+  </script>
+
+  <footer class="footer">
+    <div class="footerWrap">
+      <div class="footerBrand">
+        <img src="logo-asgest.png" alt="AS.GEST" class="footerLogo">
+        <div class="footerTitle">
+          <strong>AS.GEST</strong>
+          <span>Sistema de Gestão</span>
+        </div>
+      </div>
+
+      <div class="footerInfo">
+        <span>Desenvolvido por <b>Alan de Souza</b></span>
+        <span class="sep">•</span>
+        <span>📞 WhatsApp: <b>(48) 9 9602-2880</b></span>
+      </div>
+    </div>
+  </footer>
+
 </body>
 </html>
-
